@@ -47,3 +47,4 @@ end
 
 gem 'kaminari'
 gem 'devise'
+gem 'ransack'
