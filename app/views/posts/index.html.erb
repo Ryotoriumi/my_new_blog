@@ -1,2 +1,47 @@
-<h1>Posts#index</h1>
-<p>Find me in app/views/posts/index.html.erb</p>
+<div>
+  <h1>ORE-NO-BLOG</h1>
+</div>
+
+<div class="row">
+
+  <div class="col-sm-8 col-md-8">
+  <ul>
+    <% @posts.each do |post| %>
+      <h2><%= link_to post.title, post_path(post.id) %></h2>
+      <p><%= truncate post.body, length: 50 %></p>
+      <p style="color: grey">カテゴリ：
+      <% if post.category == nil %>
+      <%= '指定なし' %>
+      <% else %>
+      <%= post.category %>
+      <% end %>
+      <br>
+      更新日時：<%= post.updated_at %>
+      </p>
+          <%= link_to '続きを読む', post_path(post.id), class: "btn btn-primary" %>
+          <%= link_to '削除する', post_path(post.id), method: :delete, data: { confirm: '削除しますか？' } , class: "btn btn-danger"%>
+      </li>
+      <br>
+      <br>
+    <% end %>
+    </ul>
+  </div>
+
+  <div class="col-sm-4 col-md-4" style="background-color: #FFCCFF">
+
+    <h3>書いている人？</h3>
+      <p><%= @author.name %></p>
+    <h3>どんな人？</h3>
+      <p><%= @author.description %></p>
+      <p><%= image_tag @author.image_url, class: 'img-responsive' %></p>
+
+      <ul>
+      <h3>最新の記事（先着順）</h3>
+      <% @posts.each do |post| %>
+      <li><%= link_to post.title, post_path(post.id) %></li>
+      <% end %>
+    </ul>
+
+  </div>
+
+</div>
