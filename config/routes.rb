@@ -2,6 +2,7 @@ Rails.application.routes.draw do
 
   devise_for :authors
   resources :posts
+  resources :comments, only: [:create, :destroy]
   root 'posts#index'
 
   # The priority is based upon order of creation: first created -> highest priority.

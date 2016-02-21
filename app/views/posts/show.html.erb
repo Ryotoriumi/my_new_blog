@@ -1,2 +1,47 @@
-<h1>Posts#show</h1>
-<p>Find me in app/views/posts/show.html.erb</p>
+<div class="row">
+  <div class="col-md-12">
+    <p>
+      <h2><%= @post.title %></h2>
+    </p>
+    <p>
+      本文：<%= @post.body %>
+    </p>
+    <p style="color: grey">
+      カテゴリ：<%= @post.category %>
+    </p>
+
+    <%= link_to '一覧に戻る', posts_path, class: "btn btn-default" %>
+
+    <% if author_signed_in? %>
+    <%= link_to '記事を編集する', edit_post_path(@post.id), class: 'btn btn-primary' %>
+    <% end %>
+
+    <%= link_to '削除する', post_path(@post), method: :delete, data: { confirm: '削除しますか？' }, class: "btn btn-danger" %>
+  </div>
+</div>
+
+<hr>
+
+<div class="row">
+<div class="col-md-12">
+  <% @comments.each do |comment| %>
+    <p><%= "更新時間：#{comment.updated_at}" %><br />
+    <%= "本文：#{comment.body}" %></p>
+  <p>
+  <%= link_to '削除する', comment_path(comment), method: :delete %>
+  </p>
+  <% end %>
+</div>
+
+  <div class="col-lg-12">
+    <%= form_for  @comment do |f| %>
+    <%#= form_for(@comment, url: { controller: :comments, action: :create }) do |f| %>
+      <div class="form-group">
+        <%= f.label :body , 'コメントする：' %><br>
+        <%= f.text_area :body, class: "form-control" %>
+      </div>
+      <%= f.hidden_field :post_id, value: @post.id %>
+      <%= f.submit %>
+    <% end %>
+  </div>
+</div>

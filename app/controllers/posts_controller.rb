@@ -3,13 +3,13 @@ class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
 
   def index
-    @posts = Post.all
-    @author = Author.find(1)
+    #@posts = Post.all
+    @posts = Post.page(params[:page]) # using kaminari
   end
 
   def show
     @comment = Comment.new
-    @comments = @customer.comments
+    @comments = @post.comments
   end
 
   def new
@@ -27,10 +27,14 @@ class PostsController < ApplicationController
   end
 
   def edit
-    @post = Post.new(post_params)
   end
 
   def update
+      if @post.update(post_params)
+      redirect_to @post
+    else
+      render :edit
+    end
   end
 
   def destroy

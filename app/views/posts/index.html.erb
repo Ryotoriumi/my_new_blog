@@ -1,6 +1,3 @@
-<div>
-  <h1>ORE-NO-BLOG</h1>
-</div>
 
 <div class="row">
 
@@ -27,16 +24,23 @@
     </ul>
   </div>
 
-  <div class="col-sm-4 col-md-4" style="background-color: #FFCCFF">
+<%= paginate @posts %>
 
-    <h3>書いている人？</h3>
-      <p><%= @author.name %></p>
-    <h3>どんな人？</h3>
-      <p><%= @author.description %></p>
-      <p><%= image_tag @author.image_url, class: 'img-responsive' %></p>
+  <div class="col-sm-4 col-md-4">
+
+    <% if author_signed_in? %>
+    <p>書いている人：<br>
+    <%= current_author.name %></p>
+    <p>どんな人？：<br>
+    <%= current_author.description %></p>
+    <p><%= image_tag current_author.image_url, class: 'img-responsive' %></p>
+
+
+    <% end %>
+
+      <p>最新の記事（先着順）</p>
 
       <ul>
-      <h3>最新の記事（先着順）</h3>
       <% @posts.each do |post| %>
       <li><%= link_to post.title, post_path(post.id) %></li>
       <% end %>
@@ -45,3 +49,4 @@
   </div>
 
 </div>
+
